@@ -11,11 +11,9 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <!-- Babel para transpilar JSX -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Chart.js y React Chartjs 2 -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-chartjs-2@5"></script>
-  <!-- Iconos Lucide -->
-  <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.min.js"></script>
+  <!-- Ya no se necesita la importación de LucideReact -->
   <style>
     body { font-family: 'Inter', sans-serif; }
   </style>
@@ -23,11 +21,12 @@
 <body>
   <div id="root"></div>
   <script type="text/babel">
-    // Todo el código React que te proporcioné debe ir aquí
-    import React, { useState, useEffect } from 'react';
-    import { CircleGauge, UploadCloud, BarChart, FileText, LayoutDashboard, LogOut, Menu } from 'lucide-react';
-    import { PolarArea } from 'react-chartjs-2'; 
-    import Chart from 'chart.js/auto';
+    const { useState, useEffect, useRef } = React;
+    const { createRoot } = ReactDOM;
+
+    // Ya no se necesita la destructuring de LucideReact
+    // Se han reemplazado por SVG hardcodeados en los componentes.
+    // Esto asegura que la aplicación se renderice correctamente sin errores de importación.
 
     // Componente para la página de inicio de sesión.
     const LoginPage = ({ onLogin }) => (
@@ -85,15 +84,35 @@
           </div>
           <nav className="flex-1">
             <ul>
-              <SidebarItem icon={<LayoutDashboard size={20} />} text="Dashboard" isSelected={currentPage === 'dashboard'} onClick={() => setCurrentPage('dashboard')} />
-              <SidebarItem icon={<UploadCloud size={20} />} text="Subir Excel" isSelected={currentPage === 'upload'} onClick={() => setCurrentPage('upload')} />
-              <SidebarItem icon={<BarChart size={20} />} text="Análisis Reputacional" isSelected={currentPage === 'analysis'} onClick={() => setCurrentPage('analysis')} />
-              <SidebarItem icon={<FileText size={20} />} text="Análisis Ejecutivo" isSelected={currentPage === 'executive'} onClick={() => setCurrentPage('executive')} />
+              <SidebarItem 
+                icon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>} 
+                text="Dashboard" 
+                isSelected={currentPage === 'dashboard'} 
+                onClick={() => setCurrentPage('dashboard')} 
+              />
+              <SidebarItem 
+                icon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg>} 
+                text="Subir Excel" 
+                isSelected={currentPage === 'upload'} 
+                onClick={() => setCurrentPage('upload')} 
+              />
+              <SidebarItem 
+                icon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>} 
+                text="Análisis Reputacional" 
+                isSelected={currentPage === 'analysis'} 
+                onClick={() => setCurrentPage('analysis')} 
+              />
+              <SidebarItem 
+                icon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><line x1="8" x2="16" y1="18" y2="18"/><line x1="8" x2="16" y1="14" y2="14"/></svg>} 
+                text="Análisis Ejecutivo" 
+                isSelected={currentPage === 'executive'} 
+                onClick={() => setCurrentPage('executive')} 
+              />
             </ul>
           </nav>
           <div className="mt-8">
             <button onClick={onLogout} className="flex items-center w-full p-3 rounded-xl text-red-400 hover:bg-gray-700 transition duration-200">
-              <LogOut size={20} className="mr-3" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-3"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
               Cerrar sesión
             </button>
           </div>
@@ -106,7 +125,7 @@
       <header className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-md mb-6">
         <div className="flex items-center">
           <button onClick={() => setShowMenu(true)} className="text-gray-600 md:hidden mr-4">
-            <Menu size={24} />
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
           </button>
           <h1 className="text-2xl font-bold">Bienvenido, {user.name}</h1>
         </div>
@@ -129,7 +148,7 @@
       <div className="bg-white p-6 rounded-2xl shadow-md">
         <h2 className="text-3xl font-bold text-gray-800 mb-6">Subir Archivo de Menciones</h2>
         <div className="border-4 border-dashed border-gray-300 p-12 rounded-2xl text-center mb-6">
-          <UploadCloud size={64} className="mx-auto text-gray-400 mb-4" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mx-auto text-gray-400 mb-4"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m8 17 4 4 4-4"/></svg>
           <p className="text-gray-600">Arrastra y suelta tu archivo Excel aquí o</p>
           <label htmlFor="file-upload" className="cursor-pointer font-bold text-teal-500 hover:text-teal-600 transition duration-200">
             selecciona un archivo
@@ -247,63 +266,90 @@
     };
 
     // Contenido del dashboard principal.
-    const DashboardContent = ({ mentions, processMentions, isLoading, reptrackData }) => (
-      <div className="space-y-8">
-        <h2 className="text-3xl font-bold text-gray-800">Estado de Reputación</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard title="Menciones Pendientes" value={mentions.pending} color="bg-orange-500" />
-          <StatCard title="Menciones Procesadas" value={mentions.processed} color="bg-teal-500" />
-          <StatCard title="Total Menciones" value={mentions.pending + mentions.processed} color="bg-blue-500" />
-          <StatCard title="Porcentaje Procesado" value={`${((mentions.processed / (mentions.pending + mentions.processed)) * 100).toFixed(1)}%`} color="bg-purple-500" />
-        </div>
-    
-        <div className="bg-white p-6 rounded-2xl shadow-md">
-          <h3 className="text-xl font-semibold mb-4">Control de Procesamiento</h3>
-          <p className="text-gray-600 mb-4">
-            Haz clic en el botón para agarrar una muestra de las menciones pendientes y comenzar el flujo de clasificación.
-          </p>
-          <button
-            onClick={processMentions}
-            className={`p-3 rounded-xl text-white font-bold transition duration-300 ${
-              isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
-            }`}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <span className="flex items-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Procesando...
-              </span>
-            ) : 'Procesar Muestra'}
-          </button>
-        </div>
-    
-        <div className="grid md:grid-cols-2 gap-6">
+    const DashboardContent = ({ mentions, processMentions, isLoading, reptrackData }) => {
+      // Usamos un useRef para el canvas del gráfico
+      const chartRef = useRef(null);
+
+      // Usamos useEffect para inicializar el gráfico cuando los datos estén listos
+      useEffect(() => {
+        // Verificamos que tengamos una referencia al canvas y datos
+        if (chartRef.current && reptrackData.labels) {
+          // Destruimos cualquier instancia de gráfico existente para evitar duplicados
+          if (chartRef.current.chart) {
+            chartRef.current.chart.destroy();
+          }
+
+          // Creamos una nueva instancia de gráfico de Chart.js
+          const ctx = chartRef.current.getContext('2d');
+          chartRef.current.chart = new Chart(ctx, {
+            type: 'polarArea',
+            data: reptrackData,
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+            }
+          });
+        }
+      }, [reptrackData]); // El efecto se ejecuta cuando los datos de reptrack cambian
+      
+      return (
+        <div className="space-y-8">
+          <h2 className="text-3xl font-bold text-gray-800">Estado de Reputación</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <StatCard title="Menciones Pendientes" value={mentions.pending} color="bg-orange-500" />
+            <StatCard title="Menciones Procesadas" value={mentions.processed} color="bg-teal-500" />
+            <StatCard title="Total Menciones" value={mentions.pending + mentions.processed} color="bg-blue-500" />
+            <StatCard title="Porcentaje Procesado" value={`${((mentions.processed / (mentions.pending + mentions.processed)) * 100).toFixed(1)}%`} color="bg-purple-500" />
+          </div>
+      
           <div className="bg-white p-6 rounded-2xl shadow-md">
-            <h3 className="text-xl font-semibold mb-4">Evolución Reputacional (Velas Japonesas)</h3>
-            <div className="h-64 flex items-center justify-center bg-gray-50 rounded-xl text-gray-400">
-              Gráfico de Velas (Mock)
+            <h3 className="text-xl font-semibold mb-4">Control de Procesamiento</h3>
+            <p className="text-gray-600 mb-4">
+              Haz clic en el botón para agarrar una muestra de las menciones pendientes y comenzar el flujo de clasificación.
+            </p>
+            <button
+              onClick={processMentions}
+              className={`p-3 rounded-xl text-white font-bold transition duration-300 ${
+                isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
+              }`}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="flex items-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Procesando...
+                </span>
+              ) : 'Procesar Muestra'}
+            </button>
+          </div>
+      
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-2xl shadow-md">
+              <h3 className="text-xl font-semibold mb-4">Evolución Reputacional (Velas Japonesas)</h3>
+              <div className="h-64 flex items-center justify-center bg-gray-50 rounded-xl text-gray-400">
+                Gráfico de Velas (Mock)
+              </div>
+            </div>
+            <div className="bg-white p-6 rounded-2xl shadow-md">
+              <h3 className="text-xl font-semibold mb-4">ReptrackWheel Consolidado</h3>
+              {/* Usamos un canvas en lugar del componente de React */}
+              {reptrackData.labels && reptrackData.datasets ? (
+                <div className="h-64">
+                  <canvas ref={chartRef} />
+                </div>
+              ) : (
+                <div className="h-64 flex items-center justify-center bg-gray-50 rounded-xl text-gray-400">
+                  Gráfico ReptrackWheel (Mock)
+                </div>
+              )}
             </div>
           </div>
-          <div className="bg-white p-6 rounded-2xl shadow-md">
-            <h3 className="text-xl font-semibold mb-4">ReptrackWheel Consolidado</h3>
-            {/* Usamos un componente de Chart.js para un gráfico real */}
-            {reptrackData.labels && reptrackData.datasets ? (
-              <div className="h-64">
-                <PolarArea data={reptrackData} options={{ responsive: true, maintainAspectRatio: false }} />
-              </div>
-            ) : (
-              <div className="h-64 flex items-center justify-center bg-gray-50 rounded-xl text-gray-400">
-                Gráfico ReptrackWheel (Mock)
-              </div>
-            )}
-          </div>
         </div>
-      </div>
-    );
+      );
+    };
     
     // Componente principal de la aplicación.
     const App = () => {
@@ -418,9 +464,10 @@
     };
 
     // Renderiza la aplicación en el DOM
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-
+    window.onload = () => {
+      const root = createRoot(document.getElementById('root'));
+      root.render(<App />);
+    };
   </script>
 </body>
 </html>
